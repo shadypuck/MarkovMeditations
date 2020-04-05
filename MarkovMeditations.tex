@@ -41,7 +41,7 @@
 }
 \newglossaryentry{markovchain}{
     name=markov chain,
-    description={``An algebraic system that experiences transitions from one state to another according to certain probabilistic rules" \cite{bib:markovchains}}
+    description={``A[n] [algebraic] system that experiences transitions from one state to another according to certain probabilistic rules" \cite{bib:markovchains}}
 }
 \newglossaryentry{diagonalize}{
     name=diagonalize,
@@ -102,6 +102,7 @@
 
 
 
+\pagenumbering{gobble}
 \maketitle
 
 
@@ -164,7 +165,7 @@ However, to clarify the findings of this paper\footnote{So that $c\neq 1$ in Sec
     \end{description}
 \end{prob}
 
-While Problem 9 presents as a straightforward \Gls{markovchain} problem, and it certainly can be solved as such, this paper explores a quicker, far simpler method. To begin, Problem 9 will be solved by following the standard \Gls{markovchain} procedure. Following that, empirical evidence will be assembled to suggest the presence of a simpler method, and this evidence will be fleshed out into a workable method. After the validity of this new method is shown to extend to Problem 9, the tenets of the method will be rigorously derived.\par
+While Problem 9 presents as a straightforward \Gls{markovchain} problem, and it certainly can be solved as such, this paper explores a quicker, far simpler method. To begin, Problem 9 will be solved by following the standard \Gls{markovchain} procedure. Following that, empirical evidence will be assembled to suggest the presence of a simpler method, and this evidence will be fleshed out. After the validity of this new method is shown to extend to Problem 9, the tenets of the method will be rigorously derived.\par
 Having been presented, employed, and justified, the new method will be compared and contrasted with the \Gls{markovchain} method. Lastly, a number of new areas of research opened up by the derivation of the new method will be explored.\par
 Note that the techniques used in Section \ref{sse:markovchain} are adapted from in-class teachings, summarized in the author's class notes for Chapter 6: \cite{bib:ch6notes}.
 \newpage
@@ -206,7 +207,7 @@ The presence of both a \textbf{\Gls{markovmatrix}} ($A$) and of $A$ being raised
     \end{bmatrix}
 \end{equation}
 
-To efficiently raise $A$ to an arbitrarily high power, \textbf{\gls{diagonalize}} it. The reason for the diagonalization is that due to the nature of the $A=S\Lambda S^{-1}$ factorization, $A^k=S\Lambda^kS^{-1}$. Indeed, diagonalization transforms the complex process of raising $A$ to a power into the extremely simple task of raising a diagonal matrix to a power and then recompiling the factorization.\par
+To efficiently raise $A$ to an arbitrarily high power, \textbf{\gls{diagonalize}} it. The reason for the diagonalization is that due to the nature of the $A=S\Lambda S^{-1}$ factorization, $A^k=S\Lambda^kS^{-1}$. Indeed, diagonalization transforms the complex process of raising $A$ to a power into the relatively simple task of raising a diagonal matrix to a power and then recompiling the factorization.\par
 To \gls{diagonalize} $A$, first find the eigenvalues, as follows.
 \begin{align*}
     0 &=
@@ -396,7 +397,7 @@ Apply the fact that raising a diagonal matrix to a power is the same as raising 
         4\\
     \end{bmatrix}
 \end{equation*}
-It is now possible to evaluate the limit. While it is not be obvious what limit the entirety of the above expression approaches, all that is necessary is to evaluate the limits of $0.5^k$ and $1^k$ as $k\to\infty$, respectively, and then recompile the factorization. This can be done as follows.
+It is now possible to evaluate the limit. While it may not be obvious what limit the entirety of the above expression approaches, all that is necessary is to evaluate the limits of $0.5^k$ and $1^k$ as $k\to\infty$, respectively, and then recompile the factorization. This can be done as follows.
 \begin{align*}
     \lim_{k\to\infty} -\frac{1}{5}
     \begin{bmatrix}
@@ -699,13 +700,13 @@ $ that is the solution to Problem 9.
 
 
 \subsection{Rigorously Deriving the New Method}\label{sss:rigorous}
-Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0$ be a vector of initial conditions for the \Gls{markovchain}.
+Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\mathbb{R}^n$ be a vector of initial conditions for the \Gls{markovchain}.
 
 \begin{lemma}{lma:A-I}{
     $A-I$ is a \textbf{\gls{singular}} matrix.
 }
     By the definition of a \gls{markovmatrix}, the entries in each column of $A$ sum to 1. However, when the difference $A-I$ is taken, one entry of every column of $A$ decreases in value by 1. Thus, the entries in each column of $A-I$ sum to 0.\par
-    If the sum of the entries in each column of $A-I$ is 0, every column $j$ (and every vector $v\in C(A)$) can be expressed in the following form.
+    If the sum of the entries in each column of $A-I$ is 0, every column $j$ (and every vector $v\in C(A-I)$) can be expressed in the following form.
     \begin{equation*}
         v =
         \begin{bmatrix}
@@ -727,7 +728,7 @@ Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0$ be a vector of initia
         \end{bmatrix}
     \end{equation*}
     It is obvious that the above vector is not in the form necessary for it to be an element of $C(A-I)$.\par
-    However, as further proof that $u\notin C(A-I)$ and $u\in N(A-I)$, the fundamental theorem of linear algebra asserts that all elements of $C(A-I)$ are orthogonal to all elements of $N(A-I)$, or, alternatively, that the dot product of any element of the column space with any element of the null space is 0. Since $v$ encapsulates every possible element of $C(A)$, the following definitively proves that $u\notin C(A)$.
+    As further proof that $u\notin C(A-I)$ and $u\in N(A-I)$, the fundamental theorem of linear algebra asserts that all elements of $C(A-I)$ are orthogonal to all elements of $N(A-I)$, or, alternatively, that the dot product of any element of the column space with any element of the null space is 0. Since $v$ encapsulates every possible element of $C(A-I)$, the following definitively proves that $u\notin C(A-I)$.
     \begin{align*}
         0 &= v\cdot u\\
         &=
@@ -767,7 +768,7 @@ Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0$ be a vector of initia
     \end{align*}
 \end{lemma}
 
-Lemmas \ref{lma:A-I} and \ref{lma:Axx} hold true for any \Gls{markovmatrix} $A$. However, before tackling convergence, it is necessary to point out that not all \Glspl{markovchain} converge. For example, if $A$ is the following \textbf{\gls{permutationmatrix}}, the \Gls{markovchain} diverges periodically for some $x_0\in\mathbb{R}^n$.
+Lemmas \ref{lma:A-I} and \ref{lma:Axx} hold true for any \Gls{markovmatrix} $A$. However, before tackling convergence, it is necessary to point out that not all \Glspl{markovchain} converge. For example, if $A$ is the following \textbf{\gls{permutationmatrix}}, the \Gls{markovchain} diverges periodically for infinitely many (but not all) $x_0$.
 
 \begin{equation*}
     \begin{bmatrix}
@@ -778,7 +779,7 @@ Lemmas \ref{lma:A-I} and \ref{lma:Axx} hold true for any \Gls{markovmatrix} $A$.
 \end{equation*}
 
 \begin{theorem}{trm:xislimit}{
-    The solution to $\lim_{k\to\infty}A^kx_0$ lies in $\spn{x}$, where $x$ satisfies $Ax=x$, for any $x_0\in\mathbb{R}^n$ if and only if the limit converges.
+    The solution to $\lim_{k\to\infty}A^kx_0$ lies in $\spn{x}$, where $x$ satisfies $Ax=x$, for any $x_0$ if and only if the limit converges.
 }
     If $\lim_{k\to\infty}A^kx_0$ converges, the difference vector $A^{k+1}x_0-A^kx_0$ between an instance $A^kx_0$ and the next instance $A^{k+1}x_0$ converges to 0. The convergence of the distance vector implies the validity of the following algebra.
     \begin{align*}
@@ -835,7 +836,7 @@ Theorem \ref{trm:xislimit} concludes the proof of Equation \ref{eqn:Axx}. All th
             a_{n1}x_{0_1}+a_{n2}x_{0_2}+\cdots+a_{nn}x_{0_n}\\
         \end{bmatrix}
     \end{align*}
-    With both $x_0$ and $Ax_0$ defined, algebraically transform one of the expressions in the hypothesis into the other, as follows.
+    With both $x_0$ and $Ax_0$ defined, algebraically transform one of the expressions in the hypothesis into the other, as follows\footnote{Note that the transition from the second to the third line of the following derivation is legal by the definition of a \Gls{markovmatrix} --- every sum $a_{1j}+\cdots+a_{nj}$ is the sum of the values in a column $j$ of $A$, which is, by definition, equal to 1.}.
     \begin{align*}
         \sum_{i=1}^n\left( Ax_0 \right)_i &= (a_{11}x_{0_1}+\cdots+a_{1n}x_{0_n})+(a_{21}x_{0_1}+\cdots+a_{2n}x_{0_n})+\cdots+(a_{n1}x_{0_1}+\cdots+a_{nn}x_{0_n})\\
         &= (a_{11}+\cdots+a_{n1})x_{0_1}+(a_{12}+\cdots+a_{n2})x_{0_2}+\cdots+(a_{1b}+\cdots+a_{nb})x_{0_n}\\
@@ -852,13 +853,13 @@ Theorem \ref{trm:xislimit} concludes the proof of Equation \ref{eqn:Axx}. All th
     Induction hypothesis: $\sum_{i=1}^n (A^kx_0)_i = \sum_{i=1}^n x_{0_i}$.\\
     Induction step:
     \begin{align*}
-        \sum_{i=1}^n (A^{k+1}x_0)_i &\stackrel{?}{=} \sum_{i=1}^n (Ax_0)_i\\
-        \sum_{i=1}^n (AA^kx_0)_i &\stackrel{?}{=} \sum_{i=1}^n (Ax_0)_i\\
-        \sum_{i=1}^n (Ax_0)_i &\stackrel{\checkmark}{=} \sum_{i=1}^n (Ax_0)_i
+        \sum_{i=1}^n (A^{k+1}x_0)_i &\stackrel{?}{=} \sum_{i=1}^n (A^kx_0)_i\\
+        \sum_{i=1}^n (A^kAx_0)_i &\stackrel{?}{=} \sum_{i=1}^n (A^kx_0)_i\\
+        \sum_{i=1}^n (A^kx_0)_i &\stackrel{\checkmark}{=} \sum_{i=1}^n (A^kx_0)_i
     \end{align*}
 \end{theorem}
 
-Although Theorem \ref{trm:suminduction} does not directly treat the infinite case, by stating that the sum of the entries never changes under repeated multiplications by $A$, it implies that the sum of the entries never changes as $k\to\infty$, proving Equation \ref{eqn:sum}.\par
+Although Theorem \ref{trm:suminduction} does not directly treat the infinite case, stating that the sum of the entries never changes under repeated multiplications by $A$ implies that the sum of the entries never changes as $k\to\infty$, proving Equation \ref{eqn:sum}.\par
 Together, Theorems \ref{trm:xislimit} and \ref{trm:suminduction} guarantee that the method of solving Problem 9 used in Section \ref{ss2:applying} stands on solid logical footing.
 \newpage
 
@@ -866,8 +867,8 @@ Together, Theorems \ref{trm:xislimit} and \ref{trm:suminduction} guarantee that 
 
 \section{Comparing and Contrasting the Two Methods}
 \Glspl{markovchain} are useful not only for their prediction of long-run behavior, but for their prediction of short-term behavior, too. For example, in the population model discussed in association with Figure \ref{fig:population}, the model's 1, 2, or 5-year predictions are likely far more useful than its long-run behavior; after all, those rates of population movement are unlikely to remain static for infinitely many years.\par
-However, when determining the long-run behavior of a convergent \Gls{markovchain}, the new method is more than useful. It eliminates the need for the time-consuming process of diagonalization, removes the need for limits entirely, and avoids the lengthy process of recompiling the factorization. Its only flaw, per se, is in its logical footing. The behavior of systems at infinity is difficult to reconcile, and while the results utilized by the new method are all rigorously derived in Section \ref{sss:rigorous}, the logic lacks the benefits of centuries of peer-review and fine tuning that \Glspl{markovchain} have been subjected to.\par
-Despite its novelty, the new method is a gateway to discovering and proving fascinating results on the nature of infinite \Glspl{markovchain}, some of which are discussed in the next section.
+However, when determining the long-run behavior of a convergent \Gls{markovchain}, the new method is more than useful. It eliminates the need for the time-consuming process of diagonalization, removes the need for limits entirely, and avoids the lengthy process of recompiling the factorization.\par
+Most importantly, the new method is a gateway to discovering and proving fascinating results on the nature of infinite \Glspl{markovchain}, some of which are discussed in the next section.
 \newpage
 
 
