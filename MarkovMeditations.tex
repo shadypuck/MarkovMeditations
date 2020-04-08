@@ -8,6 +8,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage[nottoc,notlof]{tocbibind}
 \usepackage{scrextend}
+\usepackage[bottom]{footmisc}
 \usepackage{titlesec}
 \usepackage{wasysym}
 \usepackage{enumitem}
@@ -61,10 +62,11 @@
 
 \newcounter{lemma}
 \newcounter{theorem}
+\newcounter{corollary}
 
 \newenvironment{lemma}[2]{
     \refstepcounter{lemma}\label{#1}
-    \paragraph{Lemma \thelemma} #2
+    \paragraph{Lemma \thelemma}\hangindent=15pt #2
 
     \setlength{\leftskip}{15pt}
     \subparagraph{\hspace{-15pt}Proof}
@@ -75,7 +77,18 @@
 }
 \newenvironment{theorem}[2]{
     \refstepcounter{theorem}\label{#1}
-    \paragraph{Theorem \thetheorem} #2
+    \paragraph{Theorem \thetheorem}\hangindent=15pt #2
+
+    \setlength{\leftskip}{15pt}
+    \subparagraph{\hspace{-15pt}Proof}
+}{
+
+    \setlength{\leftskip}{0pt}
+    \qed
+}
+\newenvironment{corollary}[2]{
+    \refstepcounter{corollary}\label{#1}
+    \paragraph{Corollary \thecorollary}\hangindent=15pt #2
 
     \setlength{\leftskip}{15pt}
     \subparagraph{\hspace{-15pt}Proof}
@@ -92,6 +105,7 @@
 }
 \newcommand{\dd}[2][]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\spn}[1]{\text{span}\left( #1 \right)}
+\newcommand{\R}{\mathbb{R}}
 
 \title{On Infinite Markov Chains}
 \author{Steven Labalme}
@@ -167,7 +181,7 @@ However, to clarify the findings of this paper\footnote{So that $c\neq 1$ in Sec
 
 While Problem 9 presents as a straightforward \Gls{markovchain} problem, and it certainly can be solved as such, this paper explores a quicker, far simpler method. To begin, Problem 9 will be solved by following the standard \Gls{markovchain} procedure. Following that, empirical evidence will be assembled to suggest the presence of a simpler method, and this evidence will be fleshed out. After the validity of this new method is shown to extend to Problem 9, the tenets of the method will be rigorously derived.\par
 Having been presented, employed, and justified, the new method will be compared and contrasted with the \Gls{markovchain} method. Lastly, a number of new areas of research opened up by the derivation of the new method will be explored.\par
-Note that the techniques used in Section \ref{sse:markovchain} are adapted from in-class teachings, summarized in the author's class notes for Chapter 6: \cite{bib:ch6notes}.
+Note that the techniques used in Section \ref{sse:markovchain} are adapted from in-class teachings, summarized in the author's class notes for Chapter 6: \cite{bib:ch6notes}. Note also that this paper will entirely ignore complex arithmetic.
 \newpage
 
 
@@ -476,10 +490,10 @@ $ is the final simplification of Equation \ref{eqn:problem9} and, therefore, the
 
 
 
-\section{Solving Problem 9 More Concisely}
+\section{Solving Problem 9 More Concisely}\label{sse:concise}
 \subsection{A New Method}
 \subsubsection{Assembling the New Method}\label{ss2:assemble}
-The limit given by Equation \ref{eqn:problem9} converges on an element of $\mathbb{R}^2$ as $k\to\infty$. But there is another, simpler way to think about this process. Because the limit converges, as $k$ increases, the change that each repeated application of $A$ causes to the product diminishes, i.e., the difference vector $Ax_0-x_0$ is greater in magnitude than the difference vector $A^2x_0-Ax_0$, and so on and so forth.\par
+The limit given by Equation \ref{eqn:problem9} converges on an element of $\R^2$ as $k\to\infty$. But there is another, simpler way to think about this process. Because the limit converges, as $k$ increases, the change that each repeated application of $A$ causes to the product diminishes, i.e., the difference vector $Ax_0-x_0$ is greater in magnitude than the difference vector $A^2x_0-Ax_0$, and so on and so forth.\par
 The consistently diminishing nature of the difference vector implies that at infinity, this difference vector is 0: symbolically, $AA^\infty x_0-A^\infty x_0=0$. If $x=A^\infty x_0$ is the solution vector (the evaluation of Equation \ref{eqn:problem9}), then substitution gives $Ax-x=0$, or
 \begin{equation}\label{eqn:Axx}
     Ax = x
@@ -655,7 +669,7 @@ Use Equation \ref{eqn:Axx} to solve for the subspace in which $x$ lies (see Foot
         4c\\
         1c\\
     \end{bmatrix}
-    ,\qquad c\in\mathbb{R}
+    ,\qquad c\in\R
 \end{align*}
 
 \begin{equation*}
@@ -700,7 +714,7 @@ $ that is the solution to Problem 9.
 
 
 \subsection{Rigorously Deriving the New Method}\label{sss:rigorous}
-Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\mathbb{R}^n$ be a vector of initial conditions for the \Gls{markovchain}.
+Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain}.
 
 \begin{lemma}{lma:A-I}{
     $A-I$ is a \textbf{\gls{singular}} matrix.
@@ -717,7 +731,7 @@ Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\mathbb{R}^n$ be a v
             -a_{1j}-a_{2j}-\cdots-a_{(n-1)j}\\
         \end{bmatrix}
     \end{equation*}
-    Notably, no vector \emph{not} in this form can be an element of $C(A-I)$, and, similarly, any vector not in this form would be an element of $N(A-I)$. Thus, proving that $A-I$ is \gls{singular} becomes a task of finding a vector $u\in\mathbb{R}^n$ that is not in the above form. The following is an example of such a vector.
+    Notably, no vector \emph{not} in this form can be an element of $C(A-I)$, and, similarly, any vector not in this form would be an element of $N(A-I)$. Thus, proving that $A-I$ is \gls{singular} becomes a task of finding a vector $u\in\R^n$ that is not in the above form. The following is an example of such a vector.
     \begin{equation*}
         u =
         \begin{bmatrix}
@@ -749,11 +763,11 @@ Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\mathbb{R}^n$ be a v
         &= (1)(a_{1j})+(1)(a_{2j})+\cdots+(1)(a_{(n-1)j})+(1)(-a_{1j}-a_{2j}-\cdots-a_{(n-1)j})\\
         &= 0
     \end{align*}
-    Since there always exist elements of $\mathbb{R}^n$ (at least $\spn{u}$) in $N(A-I)$, $A-I$ is \gls{singular}.
+    Since there always exist elements of $\R^n$ (at least $\spn{u}$) in $N(A-I)$, $A-I$ is \gls{singular}.
 \end{lemma}
 
 \begin{lemma}{lma:Axx}{
-    For any $A$, there exists a vector $x$ satisfying $Ax=x$.
+    For all $A$, there exists a vector $x\in\R^n$ satisfying $Ax=x$.
 }
     By Lemma \ref{lma:A-I}, the matrix $A-I$ has a null space. In other words, the following equation has at least one family of solutions.
     \begin{equation*}
@@ -853,9 +867,8 @@ Theorem \ref{trm:xislimit} concludes the proof of Equation \ref{eqn:Axx}. All th
     Induction hypothesis: $\sum_{i=1}^n (A^kx_0)_i = \sum_{i=1}^n x_{0_i}$.\\
     Induction step:
     \begin{align*}
-        \sum_{i=1}^n (A^{k+1}x_0)_i &\stackrel{?}{=} \sum_{i=1}^n (A^kx_0)_i\\
-        \sum_{i=1}^n (A^kAx_0)_i &\stackrel{?}{=} \sum_{i=1}^n (A^kx_0)_i\\
-        \sum_{i=1}^n (A^kx_0)_i &\stackrel{\checkmark}{=} \sum_{i=1}^n (A^kx_0)_i
+        \sum_{i=1}^n (A^{k+1}x_0)_i &\stackrel{?}{=} \sum_{i=1}^n (Ax_0)_i\\
+        \sum_{i=1}^n (A^{k+1}x_0)_i &\stackrel{\checkmark}{=} \sum_{i=1}^n x_{0_i}
     \end{align*}
 \end{theorem}
 
@@ -874,7 +887,44 @@ Most importantly, the new method is a gateway to discovering and proving fascina
 
 
 \section{Diving Deeper}
-\textcolor{red}{\textit{Coming soon!}}
+The method of evaluating a convergent, infinite \Gls{markovchain} discussed in Section \ref{sse:concise} opens up several new, fascinating ways to learn about the properties of Markov matrices. Several of these will be explored below as corollaries to the lemmas and theorems of Section \ref{sss:rigorous}.\par
+Let $A$ be an $n$-square \Gls{markovmatrix}. Let $x\in\R^n$ satisfy $Ax=x$. Let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain} such that $\lim_{k\to\infty}A^kx_0$ converges.
+
+\begin{corollary}{cly:1iseigenvalue}{
+    For all $A$, there exists an eigenvalue $\lambda_i$, where $\lambda_i=1$.
+}
+    By Lemma \ref{lma:Axx}, there always exists a vector $x$. By definition, an eigenvalue (of an arbitrary $m$-square matrix $B$) is a scalar $\lambda\in\R$ satisfying $By=\lambda y$, where $y\in\R^m$.\par
+    The parallel between $Ax=x$, or $Ax=1x$, and $By=\lambda y$ is unmistakable. Since $Ax=1x$ is always solvable, $\lambda_i=1$ must be an eigenvalue of $A$.
+\end{corollary}
+
+It is worth noting that since 1 is an eigenvalue of $A$, $x$ is an eigenvector. In other words, $\lim_{k\to\infty}A^kx_0$ is an eigenvector of $A$. Eigenvectors are also known as "characteristic vectors," and the appearance of one as the solution to $\lim_{k\to\infty}A^kx_0$ is yet another surprising expression of their characterization of $A$.\par
+For the next corollary, let $P_A(\lambda)$ denote the characteristic polynomial of $A$.
+
+\begin{corollary}{cly:dividingPA}{
+    $P_A(\lambda)$ is evenly divisible by $(\lambda-1)$.
+}
+    By definition, the roots of $P_A(\lambda)$ are equal to the eigenvalues of $A$. By Corollary \ref{cly:1iseigenvalue}, 1 is an eigenvalue of any $A$ and, therefore, is a root of $P_A(\lambda)$. For any root $r$ of a polynomial $P(x)$, $(x-r)$ is a factor of $P(x)$. Since 1 is a root of $P_A(\lambda)$, $(\lambda-1)$ is a factor of $P_A(\lambda)$, which implies that $P_A(\lambda)$ is evenly divisible by $(\lambda-1)$.
+\end{corollary}
+
+Let $A^\infty$ denote\footnote{For convenience only.} $\lim_{k\to\infty}A^k$. If $u_1,u_2$ are vectors in the same dimension, let $u_1\cup u_2$ denote the matrix created by horizontally concatenating $u_1$ and $u_2$.
+
+\begin{corollary}{cly:sameNVectors}{
+    Every vector $v_1,v_2,\dots,v_n$ composing $A^\infty$ equals the element of $\spn{x}$ whose components sum to 1 if and only if $v_1,v_2,\dots,v_n$ satisfy the conditions necessary to be an $x_0$.
+}
+    By Theorem \ref{trm:xislimit}, $\lim_{k\to\infty}A^kx_0$ is an element of $\spn{x}$. By Theorem \ref{trm:suminduction}, the sum of the entries in $x_0$ equals the sum of the entries in $\lim_{k\to\infty}A^kx_0$. Using an arbitrary matrix $B$ to map an arbitrary matrix $C$ (taking the product $BC$) has the same effect as using $B$ to map every vector $c$ in $C$ individually and then concatenating the products $Bc_i$.\par
+    From these three assertions, the following algebra can be constructed.
+    \begin{align*}
+        A^\infty &= \lim_{k\to\infty} A^k\\
+        &= \lim_{k\to\infty} A^kA\\
+        &= \left( \lim_{k\to\infty} A^k \right)\left( v_1 \cup v_2 \cup\cdots\cup v_n \right)\\
+        &= \lim_{k\to\infty} A^kv_1 \cup \lim_{k\to\infty} A^kv_2 \cup\cdots\cup \lim_{k\to\infty} A^kv_n\\
+        &= x \cup x \cup\cdots\cup x
+    \end{align*}\par
+    Although the symbol $x$ is used in the conclusion of the above algebra, note that it is not just any element of $\spn{x}$, but specifically the one whose entries sum to 1 that is represented. It is this element of $\spn{x}$ because the sum of the entries of $v_i$ is 1, implying by Theorem \ref{trm:suminduction} that the sum of the entries of $x=\lim_{k\to\infty}A^kv_i$ is 1.
+\end{corollary}
+
+After Corollary \ref{cly:sameNVectors}, it is clear that $A^\infty$ has some interesting properties. As an interesting direct follow-up, because every vector in $C(A^\infty)$ is the same, $\dim C(A^\infty)=1$. More importantly, however, is that despite the fact that $A$ is raised to the infinite power to generate $A^\infty$, every entry of $A^\infty$ is finite (because every entry of $x$ is finite). This finding will be instrumental in proving the next corollary.\par
+\textcolor{red}{\emph{New corollaries coming soon!}}
 \newpage
 
 
