@@ -65,6 +65,7 @@
 \newcounter{corollary}
 
 \newenvironment{lemma}[2]{
+    \setenumerate{itemindent=15pt}
     \refstepcounter{lemma}\label{#1}
     \paragraph{Lemma \thelemma}\hangindent=15pt #2
 
@@ -76,6 +77,7 @@
     \qed
 }
 \newenvironment{theorem}[2]{
+    \setenumerate{itemindent=15pt}
     \refstepcounter{theorem}\label{#1}
     \paragraph{Theorem \thetheorem}\hangindent=15pt #2
 
@@ -87,6 +89,7 @@
     \qed
 }
 \newenvironment{corollary}[2]{
+    \setenumerate{itemindent=15pt}
     \refstepcounter{corollary}\label{#1}
     \paragraph{Corollary \thecorollary}\hangindent=15pt #2
 
@@ -106,6 +109,7 @@
 \newcommand{\dd}[2][]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\spn}[1]{\text{span}\left( #1 \right)}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 
 \title{On Infinite Markov Chains}
 \author{Steven Labalme}
@@ -714,7 +718,7 @@ $ that is the solution to Problem 9.
 
 
 \subsection{Rigorously Deriving the New Method}\label{sss:rigorous}
-Let $A$ be an $n$-square \Gls{markovmatrix}, and let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain}.
+Let $A$ be an $n$-square \Gls{markovmatrix}, where $n\geq 2$ and $n\in\N$, and let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain}.
 
 \begin{lemma}{lma:A-I}{
     $A-I$ is a \textbf{\gls{singular}} matrix.
@@ -860,7 +864,7 @@ Theorem \ref{trm:xislimit} concludes the proof of Equation \ref{eqn:Axx}. All th
 \end{lemma}
 
 \begin{theorem}{trm:suminduction}{
-    The sum of the entries in $x_0$ equals the sum of the entries in $A^kx_0$ for any $k\in\mathbb{N}$.
+    The sum of the entries in $x_0$ equals the sum of the entries in $A^kx_0$ for any $k\in\N$.
 }
     The following will be an induction proof.\\
     Basis step: $\sum_{i=1}^n (Ax_0)_i \stackrel{\checkmark}{=} \sum_{i=1}^n x_{0_i}$ (guaranteed by Lemma \ref{lma:sum}).\\
@@ -888,13 +892,13 @@ Most importantly, the new method is a gateway to discovering and proving fascina
 
 \section{Diving Deeper}
 The method of evaluating a convergent, infinite \Gls{markovchain} discussed in Section \ref{sse:concise} opens up several new, fascinating ways to learn about the properties of Markov matrices. Several of these will be explored below as corollaries to the lemmas and theorems of Section \ref{sss:rigorous}.\par
-Let $A$ be an $n$-square \Gls{markovmatrix}. Let $x\in\R^n$ satisfy $Ax=x$. Let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain} such that $\lim_{k\to\infty}A^kx_0$ converges.
+Let $A$ be an $n$-square \Gls{markovmatrix}, where $n\geq 2$ and $n\in\N$. Let $x\in\R^n$ satisfy $Ax=x$. Let $x_0\in\R^n$ be a vector of initial conditions for the \Gls{markovchain} such that $\lim_{k\to\infty}A^kx_0$ converges.
 
 \begin{corollary}{cly:1iseigenvalue}{
     For all $A$, there exists an eigenvalue $\lambda_i$, where $\lambda_i=1$.
 }
     By Lemma \ref{lma:Axx}, there always exists a vector $x$. By definition, an eigenvalue (of an arbitrary $m$-square matrix $B$) is a scalar $\lambda\in\R$ satisfying $By=\lambda y$, where $y\in\R^m$.\par
-    The parallel between $Ax=x$, or $Ax=1x$, and $By=\lambda y$ is unmistakable. Since $Ax=1x$ is always solvable, $\lambda_i=1$ must be an eigenvalue of $A$.
+    The parallel between $Ax=x$, or $Ax=1x$, and $By=\lambda y$ is clear. Since $Ax=1x$ is always solvable, $\lambda_i=1$ must be an eigenvalue of $A$.
 \end{corollary}
 
 It is worth noting that since 1 is an eigenvalue of $A$, $x$ is an eigenvector. In other words, $\lim_{k\to\infty}A^kx_0$ is an eigenvector of $A$. Eigenvectors are also known as "characteristic vectors," and the appearance of one as the solution to $\lim_{k\to\infty}A^kx_0$ is yet another surprising expression of their characterization of $A$.\par
@@ -906,12 +910,51 @@ For the next corollary, let $P_A(\lambda)$ denote the characteristic polynomial 
     By definition, the roots of $P_A(\lambda)$ are equal to the eigenvalues of $A$. By Corollary \ref{cly:1iseigenvalue}, 1 is an eigenvalue of any $A$ and, therefore, is a root of $P_A(\lambda)$. For any root $r$ of a polynomial $P(x)$, $(x-r)$ is a factor of $P(x)$. Since 1 is a root of $P_A(\lambda)$, $(\lambda-1)$ is a factor of $P_A(\lambda)$, which implies that $P_A(\lambda)$ is evenly divisible by $(\lambda-1)$.
 \end{corollary}
 
-Let $A^\infty$ denote\footnote{For convenience only.} $\lim_{k\to\infty}A^k$. If $u_1,u_2$ are vectors in the same dimension, let $u_1\cup u_2$ denote the matrix created by horizontally concatenating $u_1$ and $u_2$.
+Let $A_1$ and $A_2$ be $n$-square Markov matrices. For the purpose of the following proofs, it is necessary to define the following notation\footnote{I have not found a canonical expression of this idea, so I invented my own notation.}: If $u_1,u_2$ are vectors in the same dimension, let $u_1\cup u_2$ denote the matrix created by horizontally concatenating $u_1$ and $u_2$. For example,
+\begin{equation*}
+    u_1 =
+    \begin{bmatrix}
+        1\\
+        2\\
+        3\\
+    \end{bmatrix},\
+    u_2 =
+    \begin{bmatrix}
+        4\\
+        5\\
+        6\\
+    \end{bmatrix}
+    \Rightarrow u_1\cup u_2 =
+    \begin{bmatrix}
+        1 & 4\\
+        2 & 5\\
+        3 & 6\\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{corollary}{cly:product}{
+    The product $A_1A_2$ is a \Gls{markovmatrix}.
+}
+    Consider two matrices $B$ and $C$ such that the product $BC$ exists. Due to the manner in which multiplying two matrices is defined, $B$ maps each column vector $c_i$ of $C$ to its corresponding column vector $bc_i$ of $BC$ in the same way that it would if $c_i$ were an independent vector. In other words, the fact that the column vectors of $C$ are all united in a single matrix does not change how $B$ acts on them.\par
+    Let $a_{2_i}$ be a column vector of $A_2$. Because of the above ruminations on the mechanics of the matrix product, the following holds.
+    \begin{equation*}
+        A_1A_2 = A_1a_{2_1} \cup A_1a_{2_2} \cup\cdots\cup A_1a_{2_n}
+    \end{equation*}
+    By Lemma \ref{lma:sum}, the sum of the entries of every vector $A_1a_{2_i}$ is 1. Additionally, since every entry in $A_1$ and $A_2$ is positive, every entry in $A_1A_2$ is positive. Therefore, $A_1A_2$ is a \Gls{markovmatrix}.
+\end{corollary}
+
+\begin{corollary}{cly:noInfinite}{
+    There exists no $A$ such that the entries of $A^k$ approach infinity as $k\to\infty$.
+}
+    Since the product of two Markov matrices is also a \Gls{markovmatrix} (as guaranteed by Corollary \ref{cly:product}), then $A^k$ is a \Gls{markovmatrix} for any $k\in\N$. Since the entries of any \Gls{markovmatrix} will always be finite values in the range $[0,1]$, the entries of $A^k$ can never be infinite, even as $k\to\infty$.
+\end{corollary}
+
+Let $A^\infty$ denote\footnote{For convenience only.} $\lim_{k\to\infty}A^k$ for all $A$ such that said limit exists.
 
 \begin{corollary}{cly:sameNVectors}{
-    Every vector $v_1,v_2,\dots,v_n$ composing $A^\infty$ equals the element of $\spn{x}$ whose components sum to 1 if and only if $v_1,v_2,\dots,v_n$ satisfy the conditions necessary to be an $x_0$.
+    Every column vector $v_1,v_2,\dots,v_n$ composing $A^\infty$ equals the element of $\spn{x}$ whose entries sum to 1.
 }
-    By Theorem \ref{trm:xislimit}, $\lim_{k\to\infty}A^kx_0$ is an element of $\spn{x}$. By Theorem \ref{trm:suminduction}, the sum of the entries in $x_0$ equals the sum of the entries in $\lim_{k\to\infty}A^kx_0$. Using an arbitrary matrix $B$ to map an arbitrary matrix $C$ (taking the product $BC$) has the same effect as using $B$ to map every vector $c$ in $C$ individually and then concatenating the products $Bc_i$.\par
+    By Theorem \ref{trm:xislimit}, $\lim_{k\to\infty}A^kx_0$ is an element of $\spn{x}$. By Theorem \ref{trm:suminduction}, the sum of the entries in $x_0$ equals the sum of the entries in $\lim_{k\to\infty}A^kx_0$. Using an arbitrary matrix $B$ to map an arbitrary matrix $C$ (taking the product $BC$) has the same effect as using $B$ to map every column vector $c_i$ in $C$ individually and then concatenating the products $Bc_i$.\par
     From these three assertions, the following algebra can be constructed.
     \begin{align*}
         A^\infty &= \lim_{k\to\infty} A^k\\
@@ -923,8 +966,158 @@ Let $A^\infty$ denote\footnote{For convenience only.} $\lim_{k\to\infty}A^k$. If
     Although the symbol $x$ is used in the conclusion of the above algebra, note that it is not just any element of $\spn{x}$, but specifically the one whose entries sum to 1 that is represented. It is this element of $\spn{x}$ because the sum of the entries of $v_i$ is 1, implying by Theorem \ref{trm:suminduction} that the sum of the entries of $x=\lim_{k\to\infty}A^kv_i$ is 1.
 \end{corollary}
 
-After Corollary \ref{cly:sameNVectors}, it is clear that $A^\infty$ has some interesting properties. As an interesting direct follow-up, because every vector in $C(A^\infty)$ is the same, $\dim C(A^\infty)=1$. More importantly, however, is that despite the fact that $A$ is raised to the infinite power to generate $A^\infty$, every entry of $A^\infty$ is finite (because every entry of $x$ is finite). This finding will be instrumental in proving the next corollary.\par
-\textcolor{red}{\emph{New corollaries coming soon!}}
+\begin{corollary}{cly:AinftySingular}{
+    $A^\infty$ is a \gls{singular} matrix.
+}
+    Corollary \ref{cly:sameNVectors} guarantees that every column vector of $A^\infty$ is identical. Therefore, $\dim C(A^\infty)=1$. Since $1<n$ by the definition of $A$, $A$ is \gls{singular}.
+\end{corollary}
+
+After Corollaries \ref{cly:sameNVectors} and \ref{cly:AinftySingular}, it is clear that $A^\infty$ has some interesting properties. To better visualize the properties of $A^\infty$ consider the case where $A$ is the matrix defined by Problem 9. In this case, by Corollary \ref{cly:sameNVectors}, $A^\infty$ is given by the following.
+\begin{equation*}
+    A^\infty =
+    \begin{bmatrix}
+        0.8 & 0.8\\
+        0.2 & 0.2\\
+    \end{bmatrix}
+\end{equation*}
+The above example actually makes quite a bit of sense. By Theorem \ref{trm:xislimit}, $A^\infty$ must be linear map from every $x_0$ to an element of $
+    \spn{
+        \begin{bmatrix}
+            4\\
+            1\\
+        \end{bmatrix}
+    }
+$. Since matrices map vectors onto their own column space, $C(A)$ should equal $
+\spn{
+    \begin{bmatrix}
+        4\\
+        1\\
+    \end{bmatrix}
+}
+$, as it does. Additionally, by Theorem \ref{trm:suminduction}, $A^\infty$ must preserve the sum of the entries in any vector it maps. By Lemma \ref{lma:sum}, it will. Building off of Theorem \ref{trm:suminduction} and Lemma \ref{lma:sum}, Corollary \ref{cly:product} implies that $A^\infty$ will be a \Gls{markovmatrix}, and indeed it is. Furthermore, expanding upon the earlier observations that $\lim_{k\to\infty}A^kx_0$ is an eigenvector of $A$, it is worth noting that $A^\infty$ is entirely composed of repeats of one of its eigenvectors. Lastly, as was referenced in Section \ref{ss2:assemble}, $AA^\infty$ should equal $A^\infty$, the rational being that one more application of $A$ should do nothing to change the infinitely many already performed. Indeed, because $A^\infty$ is composed entirely of vectors that $A$ scales by 1 (does not change), $AA^\infty$ will equal $A^\infty$.\par
+Among all of the observations of the nature of $A^\infty$, one stands out as the most important: Despite the fact that $A$ is raised to the infinite power to generate $A^\infty$, every entry of $A^\infty$ is finite (because every entry of $x$ is finite). This finding will be instrumental in proving the next corollary.\par
+
+\begin{corollary}{cly:eigenvalueRange}{
+    All eigenvalues of $A$ are elements of $[-1,1]$.
+}
+    Suppose there exists an eigenvalue $\lambda$ of $A$ that is not an element of $[-1,1]$. $\lambda$ has corresponding eigenvector $y$. By the definition of eigenvalues and eigenvectors, the following equation holds.
+    \begin{equation*}
+        Ay = \lambda y
+    \end{equation*}\par
+    Consider what happens to both sides of the above equation when $A$ is raised to a power. The following algebra suggests an answer.
+    \begin{align*}
+        Ay &= \lambda y\\
+        A^2y &= \lambda(Ay)\\
+        A^2y &= \lambda(\lambda y)\\
+        A^2y &= \lambda^2y
+    \end{align*}
+    Based on the above result, an induction proof can be constructed to demonstrate the following\footnote{Due to the simplicity of the finding and the existence of a induction proof in this paper already (Theorem \ref{trm:suminduction}), such a proof will be omitted.}.
+    \begin{equation*}
+        A^ky = \lambda^ky
+    \end{equation*}
+    At this point, it is necessary to consider the case where $\lim_{k\to\infty}A^ky$ exists and where $\lim_{k\to\infty}A^ky$ does not exist separately.\par
+    \textsc{Case 1: $A^\infty$ exists}: Corollary \ref{cly:sameNVectors} implies, as was noted directly before this proof began, that should $A^\infty$ exist, all of its entries will be finite. Because $A^\infty$ is a finite matrix, $\lim_{k\to\infty}A^ky=A^\infty y$ will also be finite. On the other hand, $\lambda>1$ or $\lambda<-1$ implies that $\lambda^k$ will either grow exponentially or grow exponentially while oscillating between positive and negative values. Either way, $\lim_{k\to\infty}\lambda^ky$ must be infinite in nature. However, since the finite $\lim_{k\to\infty}A^ky$ must equal the infinite $\lim_{k\to\infty}\lambda^ky$, a contradiction has been reached.\par
+    \textsc{Case 2: $A^\infty$ does not exist}: If $\lim_{k\to\infty}A^ky$ does not converge, then $A^k$ must diverge by oscillation because Corollary \ref{cly:noInfinite} guarantees that it cannot diverge to infinity. Additionally, if $A^k$ oscillates as $k$ increases, Corollary \ref{cly:product} guarantees that it oscillates between finite matrices. By the same argument used in \textsc{Case 1}, since $A^ky$ is necessarily finite for any $k$ but $\lambda^ky$ approaches infinity as $k\to\infty$, a contradiction has been reached.
+\end{corollary}
+
+Corollary \ref{cly:eigenvalueRange} implies something interesting regarding the determinant of $A$.
+
+\begin{corollary}{cly:determinantRange}{
+    For all $A$, $|A|\in[-1,1]$.
+}
+    One definition of the determinant is the product of the eigenvectors. Corollary \ref{cly:eigenvalueRange} guarantees that every eigenvector $\lambda$ is an element of $[-1,1]$. Since a product consisting only of elements in the range $[-1,1]$ will be in the range $[-1,1]$, $|A|\in[-1,1]$.
+\end{corollary}
+
+\begin{corollary}{cly:determinantToConvergence}{
+    If $|A|=1$ or $|A|=-1$, then $A^\infty$ does not exist.
+}
+    In addition to some previous results, two properties of determinants will be required. Consider two square matrices $B$ and $C$ of identical dimensions.
+    \begin{enumerate}
+        \item $|B|=0$ if and only if $B$ is \gls{singular}.
+        \item If $B\cdot C=BC$, then $|B|\cdot|C|=|BC|$.
+    \end{enumerate}
+    Importantly, property 2 implies that $|B^2|=|B|^2$ and, by induction, that $|B^k|=|B|^k$.\par
+    For the body of the proof, consider the two cases separately.\par
+    \textsc{Case 1: $|A|=1$}: Suppose $A^\infty$ exists. As $k\to\infty$ for $A^k$, $|A^k|$ remains 1 by the following algebra.
+    \begin{align*}
+        |A^k| &= |A|^k\\
+        &= 1^k\\
+        &= 1
+    \end{align*}
+    Thus, $|A^\infty|$ is 1. Since $|A^\infty|\neq 0$, property 1 asserts that $A^\infty$ is not \gls{singular}. However, Corollary \ref{cly:AinftySingular} guarantees that $A^\infty$ is singular, and a contradiction has been reached.\par
+    \textsc{Case 2: $|A|=-1$}: Suppose $A^\infty$ exists. As $k\to\infty$ for $A^k$, $|A^k|$ is either 1 or $-1$. Thus, $|A^\infty|$ is either 1 or $-1$. Since a single matrix can only have a single determinant, a contradiction has been reached.
+\end{corollary}
+
+\begin{corollary}{cly:determinantExclusive9}{
+    If $|A|\in(-1,0)\cup(0,1)$, then $A^\infty$ exists.
+}
+    If the determinant is in this range, then raising $A$ to a power causes the determinant to decrease exponentially. If the determinant is decreasing exponentially, the matrix is not oscillating. Since $A^k$ is not oscillating and cannot be growing exponentially (Corollary \ref{cly:noInfinite}) as $k\to\infty$, it must be converging.
+\end{corollary}
+
+The importance of Corollaries \ref{cly:determinantToConvergence} and \ref{cly:determinantExclusive9} is that they provide a simple way to predict whether or not a \Gls{markovchain} will converge on a steady state\footnote{Although I believe that Corollary \ref{cly:determinantExclusive9} can be extended for the case where $|A|=0$, I am unsure of how to prove it.}.
+
+\begin{corollary}{cly:eigenvectorSum0}{
+    The sum of the entries in every eigenvector of $A$ outside of $\spn{x}$ equals 0.
+}
+    Let $y$ be an eigenvector of $A$ outside of $\spn{x}$. By the definition of an eigenvector, $A$ can only map $y$ to another element of $\spn{y}$. Since $\spn{x}$ encapsulates all eigenvectors of $A$ with corresponding eigenvalue 1 (all solutions to $Ax=x$) and the eigenvalues of $A$ lie strictly in the range $[-1,1]$ (Corollary \ref{cly:eigenvalueRange}), the eigenvalue $\lambda$ corresponding to $y$ is an element of $[-1,1)$. At this point, it is necessary to begin casework.\par
+    \textsc{Case 1: $\lambda\in(-1,1)$}: If $\lambda\in(-1,1)$, $A^ky=\lambda^ky=0$ as $k\to\infty$. Thus, at infinity, $y$ will have been scaled to 0, so the sum of its elements will be 0. However, Theorem \ref{trm:suminduction} guarantees that $A$ cannot change the sum of the entries in $y$, and since the scaling of $y$ to 0 was accomplished via repeatedly multiplying $y$ by $A$, only, the sum of the entries in $y$ is 0.\par
+    \textsc{Case 2: $\lambda=-1$}: If $\lambda=-1$, then $Ay=-y$. Additionally, Theorem \ref{trm:suminduction} guarantees that $A$ does not change the sum of the entries in $y$. Thus, the following algebra holds.
+    \begin{align*}
+        \sum_{i=0}^n y_i &= \sum_{i=0}^n (Ay)_i\\
+        \sum_{i=0}^n y_i &= \sum_{i=0}^n -y_i\\
+        \sum_{i=0}^n y_i &= -\sum_{i=0}^n y_i\\
+        2\sum_{i=0}^n y_i &= 0\\
+        \sum_{i=0}^n y_i &= 0
+    \end{align*}
+\end{corollary}
+
+Corollary \ref{cly:eigenvectorSum0} is rather difficult to visualize, so, as per usual, a relation to Problem 9 will be invoked. As was derived in Section \ref{sse:markovchain}, the two eigenvectors of $A$ (as defined by Problem 9) are as follows.
+\begin{align*}
+    x_1 &=
+    \begin{bmatrix}
+        -1\\
+        1\\
+    \end{bmatrix}&
+        x_2 &=
+        \begin{bmatrix}
+            4\\
+            1\\
+        \end{bmatrix}
+\end{align*}
+$x_2$ is the parallel to $x$, as been explored ad nauseam, so it is outside the scope of Corollary \ref{cly:eigenvectorSum0}. However, the entries of $x_1$ ($-1$ and 1) do indeed sum to $-1+1=0$.\par
+The above example pertains to \textsc{Case 1} in the proof of Corollary \ref{cly:eigenvectorSum0}. However, let's consider an example that pertains to \textsc{Case 2} as well. The following matrix was briefly referenced in Section \ref{sss:rigorous} as an example of a matrix that diverges periodically when raised to a power $k$ as $k\to\infty$.
+\begin{equation*}
+    \begin{bmatrix}
+        0 & 1 & 0\\
+        1 & 0 & 0\\
+        0 & 0 & 1\\
+    \end{bmatrix}
+\end{equation*}
+The eigenvalues and eigenvectors of this matrix are as follows.
+\begin{align*}
+    \lambda_1 &= 1&
+        \lambda_2 &= 1&
+            \lambda_3 &= -1\\
+    x_1 &=
+    \begin{bmatrix}
+        0\\
+        0\\
+        1\\
+    \end{bmatrix}&
+        x_2 &=
+        \begin{bmatrix}
+            1\\
+            1\\
+            0\\
+        \end{bmatrix}&
+            x_3 &=
+            \begin{bmatrix}
+                -1\\
+                1\\
+                0\\
+            \end{bmatrix}
+\end{align*}
+In this case, $\spn{x}$ is two dimensional, including $x_1$ and $x_2$. However, the entries of the one vector ($x_3$) which lies outside of $\spn{x}$ still sum to 0.
 \newpage
 
 
